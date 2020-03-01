@@ -1,0 +1,88 @@
+﻿{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<body style="background-color:lightgray">
+    <table border="2">
+        <tr>
+            <td>
+                <h4> Location </h4>
+            </td>
+            <td>
+                <h4> That Line Shows The Location Of The Accident </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> Person Count </h4>
+            </td>
+            <td>
+                <h4> That Line Shows How Many Persons Was In The Accident</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> Vehicle Count </h4>
+            </td>
+            <td>
+                <h4> That Line Shows How Many Vehicles Was In The Accidents </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> Injuries </h4>
+            </td>
+            <td>
+                <h4> This Line Shows How Many Injuries Was In The Accident </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> Date </h4>
+            </td>
+            <td>
+                <h4> This Line Shows The Date Of The Accident </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> Light Street </h4>
+            </td>
+            <td>
+                <h4> This Line Shows If The Accident Was In Light Street Or Not </h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4> Hit Parked Car </h4>
+            </td>
+            <td>
+                <h4> This Line Shows If The Car Accident Hits Parked Car Or Not (N - No, Y - Yes) </h4>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row my-grid-borders">
+        <div class="col-md-5 my-grid-borders">
+            <form method="post">
+                {{ form1.csrf_token }}
+                <input class="btn btn-success" type="submit" name="action" value="Expand">
+            </form>
+        </div>
+        <div class="col-md-5 my-grid-borders">
+            <form method="post">
+                {{ form2.csrf_token }}
+                <input class="btn btn-danger" type="submit" name="action" value="Collapse">
+            </form>
+        </div>
+    </div>
+    <div class="row my-grid-borders">
+        {{ raw_data_table | safe}}
+    </div>
+</body>
+
+    {% endblock %}

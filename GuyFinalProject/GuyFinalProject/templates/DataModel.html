@@ -1,0 +1,54 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<head>
+<style>
+    .button {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 24px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: darkblue;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+    }
+
+        .button:hover {
+            background-color: #000000
+        }
+
+        .button:active {
+            background-color: darkblue;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+</style>
+</head>
+    <body style="background-color: navajowhite">
+        <h2>{{ title }}.</h2>
+        <h3>{{ message }}</h3>
+        <h4>
+            I chose to look for the connection between the temperature in Seattle, USA.
+            And the car accidents every day in this Country.
+        </h4>
+        <br />
+        <br />
+        <br />
+        <h2>The First Data Is The Temperature In Seattle, USA:</h2>
+        <button class="button"><a href="{{ url_for('Data1') }}">Click Here To The First Data</a></button>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <h2>The Second Data Is The Car Accidents Every Day In Seattle, USA:</h2>
+        <button class="button"><a href="{{ url_for('Data2') }}">Click Here To The Second Data</a></button>
+
+    </body>
+{% endblock %}
