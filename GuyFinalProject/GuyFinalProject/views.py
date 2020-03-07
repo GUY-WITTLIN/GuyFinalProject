@@ -66,7 +66,7 @@ def about():
     """Renders the about page."""
     return render_template(
         'about.html',
-        title='About Me',
+        title='About The Project',
         year=datetime.now().year,
     )
 
@@ -76,9 +76,9 @@ def Album():
     """Renders the about page."""
     return render_template(
         'PictureAlbum.html',
-        title='Pictures',
+        title='This Is My Picture Album',
         year=datetime.now().year,
-        message='Welcome to my picture album'
+        message='The Biggest Wins Of The Best National & Club Teams In Football (From 2010-2019):'
     )
 
 # -------------------------------------------------------
