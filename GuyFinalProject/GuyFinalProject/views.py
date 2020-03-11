@@ -122,7 +122,8 @@ def DataModel():
 def Data1():
     form1 = ExpandForm()
     form2 = CollapseForm()
-    df = pd.read_csv(path.join(path.dirname(__file__), 'static\\data\\Whether.csv'))
+    # df = pd.read_csv(path.join(path.dirname(__file__), 'static\\data\\Whether.csv'))
+    df = pd.read_csv(path.join(path.dirname(__file__), 'static/data/Whether.csv'))
     raw_data_table = ''
 
     if request.method == 'POST':
@@ -145,7 +146,8 @@ def Data1():
 def Data2():
     form1 = ExpandForm()
     form2 = CollapseForm()
-    df = pd.read_csv(path.join(path.dirname(__file__), 'static\\data\\Car.csv'))
+    # df = pd.read_csv(path.join(path.dirname(__file__), 'static\\data\\Car.csv'))
+    df = pd.read_csv(path.join(path.dirname(__file__), 'static/data/Car.csv'))
     raw_data_table = ''
 
     if request.method == 'POST':
@@ -163,3 +165,5 @@ def Data2():
         form1 = form1,
         form2 = form2
     )
+
+app.config['SECRET_KEY'] = 'All You Need Is Love Ta ta ta ta ta'
