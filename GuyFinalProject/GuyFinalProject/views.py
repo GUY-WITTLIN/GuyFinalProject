@@ -128,7 +128,7 @@ def Data1():
 
     if request.method == 'POST':
         if request.form['action'] == 'Expand' and form1.validate_on_submit():
-            raw_data_table = df.to_html(classes = 'table table-hover')
+            raw_data_table = df.head(101).to_html(classes = 'table table-hover')
         if request.form['action'] == 'Collapse' and form2.validate_on_submit():
             raw_data_table = ''
    
@@ -152,7 +152,7 @@ def Data2():
 
     if request.method == 'POST':
         if request.form['action'] == 'Expand' and form1.validate_on_submit():
-            raw_data_table = df.to_html(classes = 'table table-hover')
+            raw_data_table = df.head(101).to_html(classes = 'table table-hover')
         if request.form['action'] == 'Collapse' and form2.validate_on_submit():
             raw_data_table = ''
    
