@@ -32,13 +32,25 @@ from wtforms import ValidationError
 
 from GuyFinalProject.Models.QueryFormStructure import QueryFormStructure
 from GuyFinalProject.Models.QueryFormStructure import LoginFormStructure 
-from GuyFinalProject.Models.QueryFormStructure import UserRegistrationFormStructure 
+from GuyFinalProject.Models.QueryFormStructure import UserRegistrationFormStructure
+from GuyFinalProject.Models.Forms import UserDataQuery 
 from GuyFinalProject.Models.QueryFormStructure import ExpandForm
 from GuyFinalProject.Models.QueryFormStructure import CollapseForm 
 from flask_bootstrap import Bootstrap
+
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+
+def convert_bool_to_int(s):
+    if s == False:
+        return 0
+    else:
+        return 1
+
 bootstrap = Bootstrap(app)
 
-db_Functions = create_LocalDatabaseServiceRoutines() 
+db_Functions = create_LocalDatabaseServiceRoutines()
 
 
 @app.route('/')
@@ -56,9 +68,8 @@ def contact():
     """Renders the contact page."""
     return render_template(
         'contact.html',
-        title='This Is My Conatct Page',
+        title='On This Page You Can See Details About Me:',
         year=datetime.now().year,
-        message='You Can Call Me Or Email Me :-)'
     )
 
 @app.route('/about')
@@ -94,7 +105,6 @@ def Register():
             db_table = ""
 
             flash('Thank You, You Will Register Now :) '+ form.FirstName.data + " " + form.LastName.data )
-            # Here you should put what to do (or were to go) if registration was good
         else:
             flash('Error: User with this Username already exist! - '+ form.username.data)
             form = UserRegistrationFormStructure(request.form)
@@ -102,7 +112,7 @@ def Register():
     return render_template(
         'register.html', 
         form=form, 
-        title='In This Page You Can Register New User',
+        title='In This Page You Can Register New User:',
         year=datetime.now().year,
         repository_name='Pandas',
         )
@@ -122,7 +132,6 @@ def DataModel():
 def Data1():
     form1 = ExpandForm()
     form2 = CollapseForm()
-    # df = pd.read_csv(path.join(path.dirname(__file__), 'static\\data\\Whether.csv'))
     df = pd.read_csv(path.join(path.dirname(__file__), 'static/data/Whether.csv'))
     raw_data_table = ''
 
@@ -146,7 +155,6 @@ def Data1():
 def Data2():
     form1 = ExpandForm()
     form2 = CollapseForm()
-    # df = pd.read_csv(path.join(path.dirname(__file__), 'static\\data\\Car.csv'))
     df = pd.read_csv(path.join(path.dirname(__file__), 'static/data/Car.csv'))
     raw_data_table = ''
 
@@ -166,4 +174,60 @@ def Data2():
         form2 = form2
     )
 
-app.config['SECRET_KEY'] = 'All You Need Is Love Ta ta ta ta ta'
+@app.route('/login', methods=['GET', 'POST'])
+def Login():
+    form = LoginFormStructure(request.form)
+    if (request.method == 'POST' and form.validate()):
+        if (db_Functions.IsLoginGood(form.username.data, form.password.data)):
+            flash('You Successfully Login To The Website!')
+            return redirect('Dataquery')
+        else:
+            flash('Error In - Username and/or Password!!!')
+   
+    return render_template(
+        'login.html', 
+        form=form, 
+        title='In This Page You Can Login To The Website:',
+        year=datetime.now().year,
+    )
+
+@app.route('/Dataquery', methods=['GET', 'POST'])
+def Dataquery():
+    form = UserDataQuery(request.form)
+    chart = 'static\\Images\\CarRain.jpg'
+    height_case_1 = "100"
+    width_case_1 = "400"
+    if (request.method == 'POST'):
+        Car = pd.read_csv(path.join(path.dirname(__file__), 'static\\Data\\Car.csv'))
+        Car = Car.drop(['Location', 'Person count', 'Vehicle Count', 'Injuries', 'Hit Parked Car'],1)
+        Car = Car.groupby('Date').size().to_frame()
+        Car = Car.rename(columns={0: "NumOfAccidents"})
+        Car.index = pd.to_datetime(Car.index)
+        Car = Car.sort_index()
+        Car = Car.rename(columns={'0': 'Accidents'})
+        Start_Date = form.Start_Date.data
+        End_Date = form.End_Date.data
+        Car = Car[Start_Date:End_Date]
+        fig1 = plt.figure()
+        ax = fig1.add_subplot(111)
+        fig1.subplots_adjust(bottom=0.4)
+        Car.plot(ax = ax, kind = 'bar')
+        chart = plt_to_img(fig1)
+
+    return render_template(
+        'Dataquery.html', 
+        form=form, 
+        chart=chart,
+        height_case_1=height_case_1,
+        width_case_1=width_case_1,
+        title='This Is My DataQuery Page, Please Enter A Start Date And End Date:',
+        year=datetime.now().year,
+    )
+def plt_to_img(fig):
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+    return pngImageB64String
+
+app.config['SECRET_KEY'] = 'For PA'

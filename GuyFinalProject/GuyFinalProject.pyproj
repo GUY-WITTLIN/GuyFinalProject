@@ -28,6 +28,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GuyFinalProject\Models\Forms.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GuyFinalProject\Models\LocalDatabaseRoutines.py">
       <SubType>Code</SubType>
     </Compile>
@@ -45,6 +48,7 @@
     <Folder Include="GuyFinalProject\static\content\" />
     <Folder Include="GuyFinalProject\static\fonts\" />
     <Folder Include="GuyFinalProject\static\Data\" />
+    <Folder Include="GuyFinalProject\static\Images\" />
     <Folder Include="GuyFinalProject\static\scripts\" />
     <Folder Include="GuyFinalProject\templates\" />
   </ItemGroup>
@@ -54,9 +58,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="GuyFinalProject\static\Data\Whether.csv" />
+    <Content Include="GuyFinalProject\static\Images\CarRain.jpg" />
     <Content Include="GuyFinalProject\templates\Data1.html" />
     <Content Include="GuyFinalProject\templates\Data2.html" />
     <Content Include="GuyFinalProject\templates\DataModel.html" />
+    <Content Include="GuyFinalProject\templates\Dataquery.html" />
+    <Content Include="GuyFinalProject\templates\login.html" />
     <Content Include="GuyFinalProject\templates\PictureAlbum.html" />
     <Content Include="GuyFinalProject\templates\register.html" />
     <Content Include="requirements.txt" />
