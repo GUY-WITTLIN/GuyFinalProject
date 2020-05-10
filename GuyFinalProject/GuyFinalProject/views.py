@@ -74,24 +74,13 @@ def contact():
 
 @app.route('/about')
 def about():
-    """Renders the about page."""
+    chart = 'static\\Images\\AboutPhoto.jpg'
     return render_template(
         'about.html',
-        title='About The Project',
+        chart=chart,
+        title='About The Project:',
         year=datetime.now().year,
     )
-
-
-@app.route('/Album')
-def Album():
-    """Renders the about page."""
-    return render_template(
-        'PictureAlbum.html',
-        title='This Is My Picture Album',
-        year=datetime.now().year,
-        message='The Biggest Wins Of The Best National & Club Teams In Football (From 2010-2019):'
-    )
-
 # -------------------------------------------------------
 # Register new user page
 # -------------------------------------------------------
@@ -195,8 +184,6 @@ def Login():
 def Dataquery():
     form = UserDataQuery(request.form)
     chart = 'static\\Images\\CarRain.jpg'
-    height_case_1 = "100"
-    width_case_1 = "400"
     if (request.method == 'POST'):
         Car = pd.read_csv(path.join(path.dirname(__file__), 'static\\Data\\Car.csv'))
         Car = Car.drop(['Location', 'Person count', 'Vehicle Count', 'Injuries', 'Hit Parked Car'],1)
@@ -204,23 +191,30 @@ def Dataquery():
         Car = Car.rename(columns={0: "NumOfAccidents"})
         Car.index = pd.to_datetime(Car.index)
         Car = Car.sort_index()
-        Car = Car.rename(columns={'0': 'Accidents'})
         Start_Date = form.Start_Date.data
         End_Date = form.End_Date.data
-        Car = Car[Start_Date:End_Date]
-        fig1 = plt.figure()
-        ax = fig1.add_subplot(111)
-        fig1.subplots_adjust(bottom=0.4)
-        Car.plot(ax = ax, kind = 'bar')
-        chart = plt_to_img(fig1)
+        if End_Date < pd.to_datetime('2004-01-01'):
+            chart = 'static\\Images\\WRONG.jpg'
+        elif Start_Date < pd.to_datetime('2004-01-01'):
+            chart = 'static\\Images\\WRONG.jpg'
+        elif Start_Date > End_Date:
+            chart = 'static\\Images\\WRONG2.jpg'
+        elif End_Date > pd.to_datetime('2020-02-19'):
+            chart = 'static\\Images\\WRONG.jpg'
+        else:
+            Car = Car[Start_Date:End_Date]
+            fig1 = plt.figure()
+            ax = fig1.add_subplot(111)
+            fig1.subplots_adjust(bottom=0.4)
+            Car.plot(ax = ax, kind = 'bar')
+            chart = plt_to_img(fig1)
 
     return render_template(
         'Dataquery.html', 
         form=form, 
         chart=chart,
-        height_case_1=height_case_1,
-        width_case_1=width_case_1,
         title='This Is My DataQuery Page, Please Enter A Start Date And End Date:',
+        message='Please Enter A Date Between 01/01/2004 - 19/02/2020:',
         year=datetime.now().year,
     )
 def plt_to_img(fig):

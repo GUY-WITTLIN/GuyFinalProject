@@ -59,12 +59,14 @@
     </Content>
     <Content Include="GuyFinalProject\static\Data\Whether.csv" />
     <Content Include="GuyFinalProject\static\Images\CarRain.jpg" />
+    <Content Include="GuyFinalProject\static\Images\AboutPhoto.jpg" />
+    <Content Include="GuyFinalProject\static\Images\WRONG2.jpg" />
+    <Content Include="GuyFinalProject\static\Images\WRONG.jpg" />
     <Content Include="GuyFinalProject\templates\Data1.html" />
     <Content Include="GuyFinalProject\templates\Data2.html" />
     <Content Include="GuyFinalProject\templates\DataModel.html" />
     <Content Include="GuyFinalProject\templates\Dataquery.html" />
     <Content Include="GuyFinalProject\templates\login.html" />
-    <Content Include="GuyFinalProject\templates\PictureAlbum.html" />
     <Content Include="GuyFinalProject\templates\register.html" />
     <Content Include="requirements.txt" />
     <Content Include="GuyFinalProject\static\content\bootstrap.css" />
