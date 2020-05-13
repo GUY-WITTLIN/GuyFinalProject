@@ -1,7 +1,3 @@
-"""
-This script runs the DemoFormProject application using a development server.
-"""
-
 from os import environ
 from GuyFinalProject import app
 

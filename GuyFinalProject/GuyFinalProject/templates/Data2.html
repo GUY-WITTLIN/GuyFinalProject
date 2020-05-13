@@ -9,6 +9,7 @@
     <br />
     <br />
     <br />
+    <!--This Is The Table That Explains The Columns In My DataSet.-->
     <table style="background-color: lightgray" class="table table-striped">
         <tr>
             <td>
@@ -59,25 +60,28 @@
             </td>
         </tr>
     </table>
-        <br />
-        <br />
-            <div class="row my-grid-borders">
-                <div class="col-md-5 my-grid-borders">
-                    <form method="post">
-                        {{ form1.csrf_token }}
-                        <input class="btn btn-success" type="submit" name="action" value="Expand">
-                    </form>
-                </div>
-                <div class="col-md-5 my-grid-borders">
-                    <form method="post">
-                        {{ form2.csrf_token }}
-                        <input class="btn btn-danger" type="submit" name="action" value="Collapse">
-                    </form>
-                </div>
-            </div>
-            <div class="row my-grid-borders">
-                {{ raw_data_table | safe}}
-            </div>
-        </body>
+    <br />
+    <br />
 
+    <div class="row my-grid-borders">
+        <div class="col-md-5 my-grid-borders">
+            <!--Expand Button-->
+            <form method="post">
+                {{ form1.csrf_token }}
+                <input class="btn btn-success" type="submit" name="action" value="Expand">
+            </form>
+        </div>
+        <div class="col-md-5 my-grid-borders">
+            <!--Collapse Button-->
+            <form method="post">
+                {{ form2.csrf_token }}
+                <input class="btn btn-danger" type="submit" name="action" value="Collapse">
+            </form>
+        </div>
+    </div>
+    <div class="row my-grid-borders">
+        <!--The DataSet By Table-->
+        {{ raw_data_table | safe}}
+    </div>
+</body>
         {% endblock %}

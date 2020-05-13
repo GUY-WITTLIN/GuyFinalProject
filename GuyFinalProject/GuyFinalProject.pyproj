@@ -60,8 +60,8 @@
     <Content Include="GuyFinalProject\static\Data\Whether.csv" />
     <Content Include="GuyFinalProject\static\Images\CarRain.jpg" />
     <Content Include="GuyFinalProject\static\Images\AboutPhoto.jpg" />
-    <Content Include="GuyFinalProject\static\Images\WRONG2.jpg" />
     <Content Include="GuyFinalProject\static\Images\WRONG.jpg" />
+    <Content Include="GuyFinalProject\static\Images\WRONG2.jpg" />
     <Content Include="GuyFinalProject\templates\Data1.html" />
     <Content Include="GuyFinalProject\templates\Data2.html" />
     <Content Include="GuyFinalProject\templates\DataModel.html" />

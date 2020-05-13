@@ -1,13 +1,8 @@
-"""
-Routes and views for the flask application.
-"""
-
 from datetime import datetime
 from flask import render_template
 from GuyFinalProject import app
 from GuyFinalProject.Models.LocalDatabaseRoutines import create_LocalDatabaseServiceRoutines
 from flask import render_template, redirect, request
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -30,7 +25,6 @@ from wtforms import TextField, TextAreaField, SubmitField, SelectField, DateFiel
 from wtforms import ValidationError
 
 
-from GuyFinalProject.Models.QueryFormStructure import QueryFormStructure
 from GuyFinalProject.Models.QueryFormStructure import LoginFormStructure 
 from GuyFinalProject.Models.QueryFormStructure import UserRegistrationFormStructure
 from GuyFinalProject.Models.Forms import UserDataQuery 
@@ -42,15 +36,10 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-def convert_bool_to_int(s):
-    if s == False:
-        return 0
-    else:
-        return 1
-
 bootstrap = Bootstrap(app)
-
 db_Functions = create_LocalDatabaseServiceRoutines()
+#----------------------------------------------------------#
+
 
 
 @app.route('/')
@@ -63,6 +52,7 @@ def home():
         year=datetime.now().year,
     )
 
+
 @app.route('/contact')
 def contact():
     """Renders the contact page."""
@@ -72,15 +62,19 @@ def contact():
         year=datetime.now().year,
     )
 
+
 @app.route('/about')
 def about():
-    chart = 'static\\Images\\AboutPhoto.jpg'
+    """Renders the contact page."""
+    chart = 'static\\Images\\AboutPhoto.jpg' #The Image
     return render_template(
         'about.html',
         chart=chart,
         title='About The Project:',
         year=datetime.now().year,
     )
+
+
 # -------------------------------------------------------
 # Register new user page
 # -------------------------------------------------------
@@ -93,9 +87,9 @@ def Register():
             db_Functions.AddNewUser(form)
             db_table = ""
 
-            flash('Thank You, You Will Register Now :) '+ form.FirstName.data + " " + form.LastName.data )
+            flash('Thank You, You Will Register Now :) '+ form.FirstName.data + " " + form.LastName.data ) #Register After All Good
         else:
-            flash('Error: User with this Username already exist! - '+ form.username.data)
+            flash('Error: User with this Username already exist! - '+ form.username.data) #Error That The Username Is Exist
             form = UserRegistrationFormStructure(request.form)
 
     return render_template(
@@ -103,13 +97,12 @@ def Register():
         form=form, 
         title='In This Page You Can Register New User:',
         year=datetime.now().year,
-        repository_name='Pandas',
         )
 
 
 @app.route('/DataModel')
 def DataModel():
-    """Renders the contact page."""
+    """DataModel Home Page."""
     return render_template(
         'DataModel.html',
         title='This Is My DataModel',
@@ -117,18 +110,20 @@ def DataModel():
         message='In This DataModel I Will Take 2 Datasets And Try To Find The Connection Between Them.'
     )
 
+
 @app.route('/data/Data1' , methods = ['GET' , 'POST'])
 def Data1():
-    form1 = ExpandForm()
-    form2 = CollapseForm()
+    """First Data Page"""
+    form1 = ExpandForm() #Expand/QueryFormStructure.
+    form2 = CollapseForm() #Collapse/QueryFormStructure.
     df = pd.read_csv(path.join(path.dirname(__file__), 'static/data/Whether.csv'))
-    raw_data_table = ''
+    raw_data_table = '' #No DataSet Table
 
     if request.method == 'POST':
         if request.form['action'] == 'Expand' and form1.validate_on_submit():
-            raw_data_table = df.head(101).to_html(classes = 'table table-hover')
+            raw_data_table = df.head(101).to_html(classes = 'table table-hover') #DataSet Table
         if request.form['action'] == 'Collapse' and form2.validate_on_submit():
-            raw_data_table = ''
+            raw_data_table = '' #No DataSet Table
    
     return render_template(
         'Data1.html',
@@ -140,18 +135,20 @@ def Data1():
         form2 = form2
     )
 
+
 @app.route('/data/Data2' , methods = ['GET' , 'POST'])
 def Data2():
-    form1 = ExpandForm()
-    form2 = CollapseForm()
+    """Second Data Page."""
+    form1 = ExpandForm() #Expand/QueryFormStructure.
+    form2 = CollapseForm() #Collapse/QueryFormStructure
     df = pd.read_csv(path.join(path.dirname(__file__), 'static/data/Car.csv'))
-    raw_data_table = ''
+    raw_data_table = '' #No DataSet Table
 
     if request.method == 'POST':
         if request.form['action'] == 'Expand' and form1.validate_on_submit():
-            raw_data_table = df.head(101).to_html(classes = 'table table-hover')
+            raw_data_table = df.head(101).to_html(classes = 'table table-hover') #DataSet Table
         if request.form['action'] == 'Collapse' and form2.validate_on_submit():
-            raw_data_table = ''
+            raw_data_table = '' #No DataSet Table
    
     return render_template(
         'Data2.html',
@@ -163,16 +160,19 @@ def Data2():
         form2 = form2
     )
 
+
+# -------------------------------------------------------
+# Login New User
+# -------------------------------------------------------
 @app.route('/login', methods=['GET', 'POST'])
 def Login():
     form = LoginFormStructure(request.form)
     if (request.method == 'POST' and form.validate()):
         if (db_Functions.IsLoginGood(form.username.data, form.password.data)):
-            flash('You Successfully Login To The Website!')
-            return redirect('Dataquery')
+            flash('You Successfully Login To The Website!') #After Login Message
+            return redirect('Dataquery') #Moves to another page (DataQuery Page)
         else:
-            flash('Error In - Username and/or Password!!!')
-   
+            flash('Error In - Username and/or Password!!!') #Error Text
     return render_template(
         'login.html', 
         form=form, 
@@ -180,48 +180,98 @@ def Login():
         year=datetime.now().year,
     )
 
+
 @app.route('/Dataquery', methods=['GET', 'POST'])
 def Dataquery():
-    form = UserDataQuery(request.form)
-    chart = 'static\\Images\\CarRain.jpg'
+    form = UserDataQuery(request.form) #UserDataQuery/Forms
+    chart = 'static\\Images\\CarRain.jpg' #The Image
+
     if (request.method == 'POST'):
+        Start_Date = form.Start_Date.data #Start_Date/UserDataQuery/Forms
+        End_Date = form.End_Date.data #End_Date/UserDataQuery/Forms
+
         Car = pd.read_csv(path.join(path.dirname(__file__), 'static\\Data\\Car.csv'))
-        Car = Car.drop(['Location', 'Person count', 'Vehicle Count', 'Injuries', 'Hit Parked Car'],1)
+        Car = Car.drop(['Location', 'Person count', 'Vehicle Count', 'Injuries', 'Hit Parked Car'],1) #Remove Things That We Don't Need
         Car = Car.groupby('Date').size().to_frame()
-        Car = Car.rename(columns={0: "NumOfAccidents"})
-        Car.index = pd.to_datetime(Car.index)
+        Car.index = pd.to_datetime(Car.index) #Move Car.index to datetime
         Car = Car.sort_index()
-        Start_Date = form.Start_Date.data
-        End_Date = form.End_Date.data
+        Car = Car[Start_Date:End_Date] #Put User Start Date And End Date To The Dataset
+        Car = Car.reset_index()
+        Car['Date'] = Car['Date'].astype(str) #Change the Date to string.
+
+        Whether = pd.read_csv(path.join(path.dirname(__file__), 'static\\Data\\Whether.csv'))
+        Whether = Whether.drop(['Max Temp' ,'Min Temp'],1) #Remove Things That We Don't Need
+        Whether['DATE'] = pd.to_datetime(Whether['DATE']) #Change Whether Date To Date Time
+        Whether = Whether.set_index('DATE')
+        Whether = Whether.sort_index()
+        Whether = Whether[Start_Date:End_Date] #Put User Start Date And End Date To The Dataset
+        Whether['RAIN'] = Whether['RAIN'].apply(lambda x:convert_bool_to_int(x)) #def Conver_Bool_To_Int (Down In this page). Changes From bool (true/false) To 0 or 1 (int)
+        Whether = Whether.reset_index()   
+        Whether = Whether.rename(columns = {'DATE' : 'Date'}) #Rename From DATE to Date (capslock off)
+        Whether['Date'] = Whether['Date'].astype(str) #Change the Date to string.
+
+        #Error Message Every Time The DataSet Can't Show You Something
         if End_Date < pd.to_datetime('2004-01-01'):
             chart = 'static\\Images\\WRONG.jpg'
         elif Start_Date < pd.to_datetime('2004-01-01'):
             chart = 'static\\Images\\WRONG.jpg'
         elif Start_Date > End_Date:
             chart = 'static\\Images\\WRONG2.jpg'
-        elif End_Date > pd.to_datetime('2020-02-19'):
+        elif End_Date > pd.to_datetime('2017-12-14'):
             chart = 'static\\Images\\WRONG.jpg'
+
         else:
-            Car = Car[Start_Date:End_Date]
-            fig1 = plt.figure()
-            ax = fig1.add_subplot(111)
-            fig1.subplots_adjust(bottom=0.4)
-            Car.plot(ax = ax, kind = 'bar')
-            chart = plt_to_img(fig1)
+            dfMerged = pd.merge(Whether , Car , on = 'Date') #Merge the 2 Datasets.
+            dfMerged = dfMerged.set_index('Date')
+            dfMerged = dfMerged.rename(columns = {0 : 'Accidents'}) #Rename Colums
+
+        if len(dfMerged) > 12: #If More Thank The Graph can read
+            dfMerged.index = pd.to_datetime(dfMerged.index)
+            s = dfMerged['Accidents']
+            s = s.resample('M').mean() #average for Car.csv by Month
+            dfnew = s.to_frame()
+            v = dfMerged['RAIN']
+            v = v.resample('M').mean() #Average For Whether.csv by Month
+            dfnew1 = v.to_frame()
+            dfnew['RAIN'] = dfnew1['RAIN']
+            dfnew = dfnew.reset_index()
+            dfnew['Date'] = dfnew['Date'].astype(str)
+            dfnew = dfnew.set_index('Date')
+            fig, ax1 = plt.subplots(figsize=(15, 10))
+            dfnew['RAIN'].plot(kind='bar', color='blue') #did The Graph
+            dfnew['Accidents'].plot(kind='line', color='orange', secondary_y=True) #Secondary y
+            chart = plt_to_img(fig) #The Def Plt_to_Img (Down This Page)
+        else:
+            fig, ax1 = plt.subplots(figsize=(15, 10)) #graph fig sizes.
+            dfMerged['RAIN'].plot(kind='bar', color='blue') #did The Graph
+            dfMerged['Accidents'].plot(kind='line', color='orange', secondary_y=True) #Secondary y
+            chart = plt_to_img(fig) #The Def Plt_to_Img (Down This Page)
 
     return render_template(
         'Dataquery.html', 
         form=form, 
         chart=chart,
         title='This Is My DataQuery Page, Please Enter A Start Date And End Date:',
-        message='Please Enter A Date Between 01/01/2004 - 19/02/2020:',
+        message='Please Enter A Date Between 01/01/2004 - 14/12/2017: (If You Put More Than 12 Days Diff, You Will See The Average Of Every Month)',
         year=datetime.now().year,
     )
+
+
+
 def plt_to_img(fig):
+    """Def that Changes The Plot To Image And Then To You Can See The Graph"""
     pngImage = io.BytesIO()
     FigureCanvas(fig).print_png(pngImage)
     pngImageB64String = "data:image/png;base64,"
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
     return pngImageB64String
 
-app.config['SECRET_KEY'] = 'For PA'
+
+def convert_bool_to_int(s):
+    """Def that Changes From False To 0 and True To 1"""
+    if s == False:
+        return 0
+    else:
+        return 1
+
+app.config['SECRET_KEY'] = 'For PA' #For Python AnyWhere

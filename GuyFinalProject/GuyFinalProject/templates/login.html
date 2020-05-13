@@ -22,6 +22,7 @@
     <table>
         <tr>
             <td>
+                <!--Here You Can Write Your Username-->
                 <h3>{{ form.username.label }}</h3>
             </td>
             <td>
@@ -29,12 +30,14 @@
             </td>
             <td>
                 {% if form.username.errors %}
+                <!--Error Message-->
                 <ul class="text-danger">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
                 {% endif %}
             </td>
         </tr>
         <tr>
             <td>
+                <!--Here You Can Write Your Password-->
                <h3>{{ form.password.label }}</h3>
             </td>
             <td>
@@ -42,6 +45,7 @@
             </td>
             <td>
                 {% if form.password.errors %}
+                <!--Error Message-->
                 <ul class="text-danger">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
                 {% endif %}
             </td>

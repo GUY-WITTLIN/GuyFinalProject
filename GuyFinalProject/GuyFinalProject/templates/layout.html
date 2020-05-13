@@ -22,6 +22,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <!--Exits a button up and moves to each of the pages with a click-->
                     <li><a href="{{ url_for('home') }}">Home</a></li>
                     <li><a href="{{ url_for('about') }}">About</a></li>
                     <li><a href="{{ url_for('contact') }}">Contact</a></li>
@@ -37,6 +38,7 @@
         {% block content %}{% endblock %}
         <hr />
         <footer>
+            <!--The year and my name, Down Of every Page-->
             <p>&copy; {{ year }} - Guy_Wittlin</p>
         </footer>
     </div>
